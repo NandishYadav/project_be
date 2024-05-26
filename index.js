@@ -34,12 +34,22 @@ mongoose.connect(mongoUri, {
   .catch(err => console.error('MongoDB connection error:', err));
 
 // Routes
+
+// Health check endpoint
 app.get('/', (req, res) => {
-    res.send('Hello World! test route');
+    res.json({
+      status: 'success',
+      message: 'Welcome to the PropertyPro Lite API',
+    });
 });
 
+//Auth routes
 app.use('/api/v1/auth', usersRoutes);
+
+//Properties routes
 app.use('/api/v1/properties', propertiesRoutes);
+
+//Interested properties routes
 app.use('/api/v1/interest', interestedPropertiesRoutes);
 
 
