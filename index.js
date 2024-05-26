@@ -8,6 +8,7 @@ const config = require('./config');
 // Routes
 const usersRoutes = require('./routes/usersRoutes');
 const propertiesRoutes = require('./routes/properitieRoutes');
+const interestedPropertiesRoutes = require('./routes/interestedproRoutes');
 
 const PORT = config.port || 4000;
 const app = express();
@@ -39,6 +40,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/v1/auth', usersRoutes);
 app.use('/api/v1/properties', propertiesRoutes);
+app.use('/api/v1/interest', interestedPropertiesRoutes);
 
 
 

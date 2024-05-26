@@ -17,6 +17,9 @@ const properitiesSchema = new mongoose.Schema({
         ref: 'users',
         required: true
     }
+},
+{
+    timestamps: true
 });
 
 module.exports = mongoose.model('properities', properitiesSchema);
