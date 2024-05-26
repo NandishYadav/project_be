@@ -1,17 +1,31 @@
 const {createObject, getAllObjects,getAllObjectsCount, getObjectById, updateObject} = require('./services');
+const userServices = require('../users/services');
+const utiles = require('../../utiles');
 
 const properitieControllers = {
     markInterested: async (req,res) => {
         try {
+            const {properitie,posted_by} = req.body;
+            const user = req.user;
             const interested = await createObject(req.body);
+            const ownerDetails = await userServices.getObjectById(posted_by);
+            const sendMailToOwner = await utiles.sendMail(ownerDetails.email, 'Interested in your property', 'You have a new interested in your property'
+            , `Hello ${ownerDetails.first_name}, <br> You have a new interested in your property. <br> 
+            name: ${user.first_name} ${user.last_name} <br> email: ${user.email} <br> phone_number: ${user.phone_number} <br>
+            <br> <br> Regards, <br> Team Properitie`
+            );
+            const sendMailToInterested = await utiles.sendMail(user.email, 'Interested in your property', 'You have shown interest in a property'
+            , `Hello ${user.first_name}, <br> You have shown interest in a property. <br>
+            owner: ${ownerDetails.first_name} ${ownerDetails.last_name} <br> email: ${ownerDetails.email} <br> phone_number: ${ownerDetails.phone_number} <br>
+            <br> <br> Regards, <br> Team Properitie`
+            );
             res.status(201).json({
                 data: interested,
                 message: "Interested Properitie created successfully"
             });
         } catch (error) {
             res.status(500).json({
-                status:"success",
-                data:intrested,
+                status:"Internal Server Error",
                  message: error.message });
         }
     },

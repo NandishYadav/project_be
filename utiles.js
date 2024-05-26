@@ -1,6 +1,7 @@
 
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer');
 const config = require('./config');
 const utiles = {
      validatePassword : async(password)=> {
@@ -57,7 +58,34 @@ const utiles = {
         return jwt.sign(payload, config.jwtSecret, {
             expiresIn: config.jwtExpiresIn,
         });
-    }
+      },
+      sendMail:async(email,subject,text,html) => {
+        
+        const transporter = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+            user: process.env.EMAIL,
+            pass: process.env.PASSWORD
+          }
+        });
+        
+        const mailOptions = {
+          from: process.env.EMAIL,
+          to: email,
+          subject: subject,
+          text: text,
+          html: html
+        };
+        return 
+        transporter.sendMail(mailOptions, function(error, info){
+          if (error) {
+            console.log(error);
+          } else {
+            console.log('Email sent: ' + info.response);
+            return info.response;
+          }
+        });
+      }
 }
 
 module.exports = utiles;

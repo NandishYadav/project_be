@@ -16,7 +16,7 @@ const userControllers = {
             req.body.password = await utiles.hashPassword(req.body.password);
             const user = await userServices.createObject(req.body);
             delete user.password;
-            user.token = await utiles.generateToken(user);
+            user.token = await utiles.generateToken({ _id: user._id , email: user.email , first_name: user.first_name , last_name: user.last_name ,phone_number: user.phone_number });
             res.status(201).json({
                 data: user,
                 message: "User created successfully"
