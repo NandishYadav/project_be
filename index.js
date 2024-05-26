@@ -4,7 +4,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const config = require('./config');
 
-const PORT = config.port || 3000;
+const PORT = config.port || 4000;
 const app = express();
 dotenv.config();
 
@@ -38,10 +38,10 @@ app.listen(PORT, () => {
 process.on('unhandledRejection', (reason, promise) => {
     console.error('Unhandled Rejection at:', promise, 'reason:', reason);
     // Application specific logging, throwing an error, or other logic here
-  });
+});
 
   // Handle uncaught exceptions
 process.on('uncaughtException', (error) => {
     console.error('Uncaught Exception:', error);
     process.exit(1); // Mandatory (as per the Node.js docs)
-  });
+});
