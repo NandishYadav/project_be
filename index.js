@@ -4,6 +4,8 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const config = require('./config');
 
+const usersRoutes = require('./routes/usersRoutes');
+
 const PORT = config.port || 4000;
 const app = express();
 dotenv.config();
@@ -11,7 +13,13 @@ dotenv.config();
 
 
 // Middlewares
-app.use(cors());                // Enables CORS
+const corsOptions = {
+    "origin": "*",
+    "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+    "preflightContinue": false,
+    "optionsSuccessStatus": 204
+  };
+app.use(cors(corsOptions));              // Enables CORS
 app.use(express.json());        // Parses incoming JSON requests and puts the parsed data in req.body
 
 // Database connection
@@ -25,6 +33,8 @@ mongoose.connect(mongoUri, {
 app.get('/', (req, res) => {
     res.send('Hello World! test route');
 });
+
+app.use('/api/v1/auth', usersRoutes);
 
 
 
