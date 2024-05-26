@@ -37,7 +37,7 @@ const properitieControllers = {
                 filters.query = {number_of_rooms: rooms};
             };
             const properities = await getAllObjects(filters);
-            const count = await getAllObjectsCount(filters.query);
+            const count = await getAllObjectsCount(filters.query ? filters.query : {});
             res.status(200).json({
                 status: 'success',
                 data: properities || [],
