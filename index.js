@@ -4,7 +4,10 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const config = require('./config');
 
+
+// Routes
 const usersRoutes = require('./routes/usersRoutes');
+const propertiesRoutes = require('./routes/properitieRoutes');
 
 const PORT = config.port || 4000;
 const app = express();
@@ -35,6 +38,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/v1/auth', usersRoutes);
+app.use('/api/v1/properties', propertiesRoutes);
 
 
 

@@ -1,5 +1,6 @@
 const userServices = require('./services');
 const utiles = require('../../utiles');
+const jwt = require('jsonwebtoken');
 
 const userControllers = {
     createUser: async (req,res) => {
@@ -14,7 +15,12 @@ const userControllers = {
              // Hash password before saving in database
             req.body.password = await utiles.hashPassword(req.body.password);
             const user = await userServices.createObject(req.body);
-            res.status(201).json(user);
+            delete user.password;
+            user.token = await utiles.generateToken(user);
+            res.status(201).json({
+                data: user,
+                message: "User created successfully"
+            });
         } catch (error) {
             res.status(500).json({ message: error.message });
         }
@@ -80,6 +86,39 @@ const userControllers = {
         } catch (error) {
             res.status(500).json({ message: error.message });
         }
+    },
+    authentication:async (req, res,next) => {
+        // 1. get the token from headers
+        let idToken = '';
+        if (
+            req.headers.authorization &&
+            req.headers.authorization.startsWith('Bearer')
+        ) {
+            // Bearer asfdasdfhjasdflkkasdf
+            idToken = req.headers.authorization.split(' ')[1];
+        }
+        if (!idToken) {
+            return res.json({
+                statusCode: 401,
+                status: 'error',
+                 message: 'Unauthorized' 
+                });
+        }
+        // 2. token verification
+        const tokenDetail = jwt.verify(idToken, process.env.JWT_SECRET_KEY);
+        // console.log(tokenDetail)
+        // 3. get the user detail from db and add to req object
+        const freshUser = await userServices.getObjectById(tokenDetail._id);
+        
+        if (!freshUser) {
+            return res.json({
+                statusCode: 401,
+                status: 'error',
+                 message: 'Unauthorized' 
+                });
+        }
+        req.user = freshUser;
+        next();
     }
 };
 

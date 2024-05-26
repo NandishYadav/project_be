@@ -25,7 +25,7 @@ const updateObject = async (objectId, object) => {
 
 const getObjectById = async objectId => {
   try {
-    return await users.findById(objectId)
+    return await users.findById(objectId).lean().exec();
   } catch (error) {
     console.error(error)
   }
