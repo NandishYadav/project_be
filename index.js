@@ -25,8 +25,9 @@ const corsOptions = {
     'Access-Control-Allow-Origin': '*', // Required for CORS support to work
     "optionsSuccessStatus": 204
   };
+app.use(express.json());   // Parses incoming JSON requests and puts the parsed data in req.body
 app.use(cors());              // Enables CORS
-app.use(express.json());        // Parses incoming JSON requests and puts the parsed data in req.body
+     
 
 // Database connection
 const mongoUri = config.mongoUri;
