@@ -31,7 +31,7 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: ["https://rentify-lemon-three.vercel.app/", "http://localhost:3000"],
+    origin: ["https://rentify-lemon-three.vercel.app", "http://localhost:3000"],
     allowedHeaders: ["content-type"],
     methods: ["GET", "PUT", "POST", "DELETE"],
     'content-type':['application/json'],
