@@ -27,7 +27,7 @@ const corsOptions = {
   };
 
 app.use(express.json());  
-app.use(cors(corsOptions));              // Enables CORS
+// app.use(cors(corsOptions));              // Enables CORS
       // Parses incoming JSON requests and puts the parsed data in req.body
 
 // Database connection
