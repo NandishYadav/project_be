@@ -22,12 +22,13 @@ const corsOptions = {
     "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
     'strict-origin-when-cross-origin': 'false',
     'content-type': 'application/json',
+    'Accept': 'application/json,text/plain,*/*',
     'Access-Control-Allow-Origin': '*', // Required for CORS support to work
     "optionsSuccessStatus": 204
   };
 
 app.use(express.json());  
-app.use(cors());              // Enables CORS
+app.use(cors(corsOptions));              // Enables CORS
       // Parses incoming JSON requests and puts the parsed data in req.body
 
 // Database connection
