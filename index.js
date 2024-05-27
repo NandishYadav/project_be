@@ -18,13 +18,12 @@ dotenv.config();
 
 // Middlewares
 const corsOptions = {
-  
+
     "origin": "*",
     "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
     "preflightContinue": false,
     'strict-origin-when-cross-origin': 'false',
     'content-type': 'application/json',
-
     'Access-Control-Allow-Origin': '*', // Required for CORS support to work
     "optionsSuccessStatus": 204
   };
