@@ -36,6 +36,7 @@ app.use(
     methods: ["GET", "PUT", "POST", "DELETE"],
     'content-type':['application/json'],
     credentials: true,
+    Accept:['application/json','text/plain','*/*']
   })
 );             // Enables CORS
       // Parses incoming JSON requests and puts the parsed data in req.body
