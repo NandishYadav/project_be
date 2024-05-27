@@ -28,7 +28,16 @@ const corsOptions = {
   };
 
 app.use(express.json());  
-app.use(cors(corsOptions));              // Enables CORS
+
+app.use(
+  cors({
+    origin: ["https://rentify-lemon-three.vercel.app/", "http://localhost:3000"],
+    allowedHeaders: ["content-type"],
+    methods: ["GET", "PUT", "POST", "DELETE"],
+    'content-type':['application/json'],
+    credentials: true,
+  })
+);             // Enables CORS
       // Parses incoming JSON requests and puts the parsed data in req.body
 
 // Database connection
