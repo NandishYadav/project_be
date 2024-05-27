@@ -21,6 +21,7 @@ const corsOptions = {
     "origin": "*",
     "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
     "preflightContinue": false,
+    'Access-Control-Allow-Origin': '*', // Required for CORS support to work
     "optionsSuccessStatus": 204
   };
 app.use(cors(corsOptions));              // Enables CORS
