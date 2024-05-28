@@ -17,29 +17,28 @@ dotenv.config();
 
 
 // Middlewares
-const corsOptions = {
-    "origin": "*",
-    "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-    'strict-origin-when-cross-origin': 'false',
-    'content-type': 'application/json',
-    'Accept': 'application/json,text/plain,*/*',
-    'Access-Control-Allow-Origin': '*', // Required for CORS support to work
-    "optionsSuccessStatus": 204
-  };
 
 app.use(express.json());  
 
-app.use(
-  cors({
-    origin: ["https://rentify-lemon-three.vercel.app", "http://localhost:3000"],
-    allowedHeaders: ["content-type"],
-    methods: ["GET", "PUT", "POST", "DELETE"],
-    'content-type':['application/json'],
-    credentials: true,
-    Accept:['application/json','text/plain','*/*']
-  })
-);             // Enables CORS
-      // Parses incoming JSON requests and puts the parsed data in req.body
+// Enables CORS
+// Parses incoming JSON requests and puts the parsed data in req.body
+      
+const corsOptions = {
+  origin: '*'
+}
+app.use(cors(corsOptions))
+
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Credentials', true)
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json'
+  )
+  next()
+})
+
 
 // Database connection
 const mongoUri = config.mongoUri;
